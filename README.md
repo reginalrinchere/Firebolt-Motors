@@ -1,29 +1,99 @@
-# Salesforce DX Project: Next Steps
+Scenario - Custom Sales Territory Management
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Firebolt Motors Inc. is experiencing exponential sales growth after releasing their hit Model F solar powered sports car. 
 
-## How Do You Plan to Deploy Your Changes?
+They employ a Sales team that sells vehicles to auto dealers across the United States. Each sales representative has a territory of one or more zip codes. Sales reps own the relationship with all auto dealers in their zip code territories.
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+Firebolt Motors Inc. currently uses Salesforce to track their sales activities, including:
+Accounts: Each account represents an automobile dealer.
+Opportunities: A sale of vehicles to an automobile dealer.
+Contacts: Automobile dealer employees.
 
-## Configure Your Salesforce DX Project
+The Sales Operations team uses a combination of Salesforce and spreadsheets to manage each sales rep’s territory. They are manually setting the Account Owner field to the sales rep’s User record when the Account’s Zip Code belongs to the sales rep. Currently, a list of zip codes and their sales rep is stored in a list that looks like this:
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+Zip Codes:
+91000
+91001
+91002
+91002
+91010
+91010
+91010
+91020
+92010
+92020
 
-## Read All About It
+Sales Representatives:
+Blake
+Blake
+Blake
+Jacqueline
+Jacqueline
+Jacqueline
+Denise
+Aaron
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
-"# Firebolt-Motors---project" 
-"# Firebolt-Motors---project" 
-"# Firebolt-Motors---project" 
-"# Firebolt-Motors---project" 
-"# Firebolt-Motors" 
-"# Firebolt-Motors" 
-"# Firebolt-Motors" 
-"# Firebolt-Motors" 
-"# Firebolt-Motors" 
-"# Firebolt-Motors" 
-"# Firebolt-Motors" 
+
+Since Firebolt Motors Inc.’s sales team has tripled in size in the past year, the Sales Operations team is having trouble keeping up with all the sales territory changes. This process must be automated!
+
+Requirements 
+
+Requirement #1: Recreate the Zip Code spreadsheet as a custom Territory object. The custom object should have the following custom fields:
+
+Zip Code
+Text 
+The standard name field. Each record will be named after its specific zip code.
+
+Owner
+Lookup (User)
+The standard owner field. The sales rep assigned to this territory
+
+
+Note: All fields should have field history tracking turned on.
+
+Requirement #2: When an Account’s BillingPostalCode (aka Zip Code), is changed, 
+Change the Account Owner to the sales representative assigned to the new zip code
+Change the Owner field of all the Account’s Contacts to the same sales rep 
+Change the Owner field of all the Account’s Open Opportunities to the same sales rep
+
+Note: 
+The logic should run only when the Account’s zip code is changed or populated for the first time
+If no matching Territories are found, do nothing 
+
+Requirement #3: Multiple sales representatives can be assigned to the same zip code territory. If this is the case, use a random function to select one of the assigned sales representatives.
+
+Requirement #4: Three sales representatives at most can be assigned to a single zip code. Display an error if a user attempts to associate another sales representative to a zip code.
+
+Requirement #5: Create an Assignment History custom object with the following fields:
+
+
+Previous Owner
+Lookup (User)
+The prior sales rep assigned to this Account
+
+New Owner
+Lookup (User)
+The new sales rep assigned to this Account
+
+Previous Territory
+Lookup (Territory__c)
+The matching Territory__c record for the prior zip code
+
+New Territory
+Lookup (Territory__c)
+The matching Territory__c record for the new zip code
+
+Account
+Master-Detail (Account)
+The related Account record
+
+Changed By
+Lookup (User)
+The user who changed the BillingPostalCode
+
+
+Requirement #6: Create an Assignment_History__c record whenever an Account’s BillingPostalCode is changed or populated for the first time. All fields should be populated.
+
+Requirement #7: If a Territory__c record’s sales representative is changed (and only when it is changed), repeat Requirement #2’s logic for all Accounts associated with the Territory.
+
+Requirement #8: At least 90% test code coverage.
