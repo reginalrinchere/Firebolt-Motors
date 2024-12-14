@@ -12,25 +12,25 @@ Contacts: Automobile dealer employees.
 The Sales Operations team uses a combination of Salesforce and spreadsheets to manage each sales rep’s territory. They are manually setting the Account Owner field to the sales rep’s User record when the Account’s Zip Code belongs to the sales rep. Currently, a list of zip codes and their sales rep is stored in a list that looks like this:
 
 Zip Codes:
-91000
-91001
-91002
-91002
-91010
-91010
-91010
-91020
-92010
+91000,
+91001,
+91002,
+91002,
+91010,
+91010,
+91010,
+91020,
+92010,
 92020
 
 Sales Representatives:
-Blake
-Blake
-Blake
-Jacqueline
-Jacqueline
-Jacqueline
-Denise
+Blake,
+Blake,
+Blake,
+Jacqueline,
+Jacqueline,
+Jacqueline,
+Denise,
 Aaron
 
 
