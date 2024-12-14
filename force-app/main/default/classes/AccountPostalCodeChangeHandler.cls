@@ -5,10 +5,10 @@ public class accountPostalCodeHandler {
         List<Assignment_History__c> newAssignmentRecords = new List<Assignment_History__c>();        
         Set<Id> accountIds = new Set<Id>();
         
-        for (Account newAccount : newAccounts) {       
+        for (Account newAccount : newAccounts) {      
             
             //Collect zipcodes from accounts where the BillingPostalCode field is populated for the first time or changed to a new value.
-            if ((oldAccounts.get(newAccount.Id).BillingPostalCode == Null && newAccount.BillingPostalCode != Null) || 
+            if ((oldAccounts.get(newAccount.Id).BillingPostalCode == Null && newAccount.BillingPostalCode != Null) ||
                 (oldAccounts.get(newAccount.Id).BillingPostalCode != newAccount.BillingPostalCode)) {
                     updatedZipCodes.add(newAccount.BillingPostalCode);
                     accountIds.add(newAccount.Id);
@@ -21,7 +21,7 @@ public class accountPostalCodeHandler {
         //Here will will exit the code if no territories are found to avoid unnecessary processing.
         if (relatedTerritories.isEmpty()) {
             return;
-        } 
+        }
         
         //We will use this map to set the ownerId on our account records to match the owner field on related territory records.
         Map<String, Id> zipCodeToOwnerMap = new Map<String, Id>();      
@@ -43,14 +43,14 @@ public class accountPostalCodeHandler {
         }
         
         for (Account newAccount : newAccounts) {
-            if ((oldAccounts.get(newAccount.Id).BillingPostalCode == Null && newAccount.BillingPostalCode != Null) || 
+            if ((oldAccounts.get(newAccount.Id).BillingPostalCode == Null && newAccount.BillingPostalCode != Null) ||
                 (oldAccounts.get(newAccount.Id).BillingPostalCode != newAccount.BillingPostalCode)) {
                     
-                    Id ownerId = zipCodeToOwnerMap.get(newAccount.BillingPostalCode);                     
+                    Id ownerId = zipCodeToOwnerMap.get(newAccount.BillingPostalCode);                    
                     List<String> repsPerZipCode = repsPerZipCodeMap.get(newAccount.BillingPostalCode);
                     
                     if (repsPerZipCode.size() > 1) {
-                        Integer randomIndex = Math.mod(Math.abs(Crypto.getRandomInteger()),repsPerZipCode.size());
+                        Integer randomIndex = Math.mod(Math.abs(Crypto.getRandomInteger()), repsPerZipCode.size());
                         Id selectedOwner = repsPerZipCode[randomIndex];
                         newAccount.OwnerId = selectedOwner;
                     } else {
@@ -59,7 +59,7 @@ public class accountPostalCodeHandler {
                         }
                     }
                     
-                    Assignment_History__c History = new Assignment_History__c();   
+                    Assignment_History__c History = new Assignment_History__c();  
                     History.Previous_Owner__c = oldAccounts.get(newAccount.Id).OwnerId;
                     History.New_Owner__c = newAccount.OwnerId;
                     History.Changed_By__c = UserInfo.getUserId();
@@ -82,9 +82,9 @@ public class accountPostalCodeHandler {
         //Create a map to set the ownerId on related opportunity and contact records to match account ownerIds.
         Map<Id, Id> setOwnerId = new Map<Id, Id>();
         for (Account newAccount : newAccounts) {
-            if ((oldAccounts.get(newAccount.Id).BillingPostalCode == Null && newAccount.BillingPostalCode != Null) || 
+            if ((oldAccounts.get(newAccount.Id).BillingPostalCode == Null && newAccount.BillingPostalCode != Null) ||
                 (oldAccounts.get(newAccount.Id).BillingPostalCode != newAccount.BillingPostalCode)) {
-                    newAccount.OwnerId = zipCodeToOwnerMap.get(newAccount.BillingPostalCode); 
+                    newAccount.OwnerId = zipCodeToOwnerMap.get(newAccount.BillingPostalCode);
                     setOwnerId.put(newAccount.Id, newAccount.OwnerId);
                 }
         }
@@ -102,15 +102,17 @@ public class accountPostalCodeHandler {
         }
         
         //We will do the same with related opportunities.
-        List<Opportunity> relatedOpportunities = [SELECT OwnerId, AccountId FROM Opportunity WHERE AccountId IN :accountIds];
+        List<Opportunity> relatedOpportunities = [SELECT OwnerId, AccountId, StageName FROM Opportunity WHERE AccountId IN :accountIds];
         
         //We are utilizing bulkification here as well.
         List<Opportunity> updatedOpportunities = new List<Opportunity>();
         
         //Again we are doing the same with related opportunities in this for each.
         for (Opportunity opp : relatedOpportunities) {
-            opp.OwnerId = setOwnerId.get(opp.AccountId);
-            updatedOpportunities.add(opp);
+            if (opp.StageName != 'Closed Won' && opp.StageName != 'Closed Lost') {
+                opp.OwnerId = setOwnerId.get(opp.AccountId);
+                updatedOpportunities.add(opp);
+            }
         }
         
         if (!updatedContacts.isEmpty()) {
