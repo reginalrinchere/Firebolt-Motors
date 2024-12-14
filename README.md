@@ -71,24 +71,24 @@ Previous Owner
 Lookup (User)
 The prior sales rep assigned to this Account
 
-New Owner
-Lookup (User)
+New Owner -
+Lookup (User) -
 The new sales rep assigned to this Account
 
-Previous Territory
-Lookup (Territory__c)
+Previous Territory -
+Lookup (Territory__c) -
 The matching Territory__c record for the prior zip code
 
-New Territory
-Lookup (Territory__c)
+New Territory -
+Lookup (Territory__c) -
 The matching Territory__c record for the new zip code
 
-Account
-Master-Detail (Account)
+Account -
+Master-Detail (Account) -
 The related Account record
 
-Changed By
-Lookup (User)
+Changed By -
+Lookup (User) -
 The user who changed the BillingPostalCode
 
 
