@@ -40,12 +40,12 @@ Requirements
 
 Requirement #1: Recreate the Zip Code spreadsheet as a custom Territory object. The custom object should have the following custom fields:
 
-Zip Code
-Text 
+Zip Code -
+Text -
 The standard name field. Each record will be named after its specific zip code.
 
-Owner
-Lookup (User)
+Owner -
+Lookup (User) -
 The standard owner field. The sales rep assigned to this territory
 
 
@@ -67,8 +67,8 @@ Requirement #4: Three sales representatives at most can be assigned to a single 
 Requirement #5: Create an Assignment History custom object with the following fields:
 
 
-Previous Owner
-Lookup (User)
+Previous Owner -
+Lookup (User) -
 The prior sales rep assigned to this Account
 
 New Owner -
