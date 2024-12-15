@@ -36,7 +36,7 @@ Aaron
 
 Since Firebolt Motors Inc.’s sales team has tripled in size in the past year, the Sales Operations team is having trouble keeping up with all the sales territory changes. This process must be automated!
 
-Requirements 
+Requirements: 
 
 Requirement #1: Recreate the Zip Code spreadsheet as a custom Territory object. The custom object should have the following custom fields:
 
