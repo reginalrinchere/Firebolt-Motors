@@ -38,7 +38,7 @@ Since Firebolt Motors Inc.’s sales team has tripled in size in the past year, 
 
 Requirements: 
 
-Requirement #1    Recreate the Zip Code spreadsheet as a custom Territory object. The custom object should have the following custom fields:
+Requirement #1  Recreate the Zip Code spreadsheet as a custom Territory object. The custom object should have the following custom fields:
 
 Zip Code -
 Text -
