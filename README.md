@@ -1,4 +1,4 @@
-Scenario - Custom Sales Territory Management
+Salesforce Scenario - Custom Sales Territory Management
 
 Firebolt Motors Inc. is experiencing exponential sales growth after releasing their hit Model F solar powered sports car. 
 
