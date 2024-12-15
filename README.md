@@ -38,7 +38,7 @@ Since Firebolt Motors Inc.’s sales team has tripled in size in the past year, 
 
 Requirements: 
 
-Requirement #1: Recreate the Zip Code spreadsheet as a custom Territory object. The custom object should have the following custom fields:
+Requirement #1 Recreate the Zip Code spreadsheet as a custom Territory object. The custom object should have the following custom fields:
 
 Zip Code -
 Text -
@@ -51,7 +51,7 @@ The standard owner field. The sales rep assigned to this territory
 
 Note: All fields should have field history tracking turned on.
 
-Requirement #2: When an Account’s BillingPostalCode (aka Zip Code), is changed, 
+Requirement #2 When an Account’s BillingPostalCode (aka Zip Code), is changed, 
 Change the Account Owner to the sales representative assigned to the new zip code
 Change the Owner field of all the Account’s Contacts to the same sales rep 
 Change the Owner field of all the Account’s Open Opportunities to the same sales rep
@@ -60,11 +60,11 @@ Note:
 The logic should run only when the Account’s zip code is changed or populated for the first time
 If no matching Territories are found, do nothing 
 
-Requirement #3: Multiple sales representatives can be assigned to the same zip code territory. If this is the case, use a random function to select one of the assigned sales representatives.
+Requirement #3 Multiple sales representatives can be assigned to the same zip code territory. If this is the case, use a random function to select one of the assigned sales representatives.
 
-Requirement #4: Three sales representatives at most can be assigned to a single zip code. Display an error if a user attempts to associate another sales representative to a zip code.
+Requirement #4 Three sales representatives at most can be assigned to a single zip code. Display an error if a user attempts to associate another sales representative to a zip code.
 
-Requirement #5: Create an Assignment History custom object with the following fields:
+Requirement #5 Create an Assignment History custom object with the following fields:
 
 
 Previous Owner -
@@ -92,8 +92,8 @@ Lookup (User) -
 The user who changed the BillingPostalCode
 
 
-Requirement #6: Create an Assignment_History__c record whenever an Account’s BillingPostalCode is changed or populated for the first time. All fields should be populated.
+Requirement #6 Create an Assignment_History__c record whenever an Account’s BillingPostalCode is changed or populated for the first time. All fields should be populated.
 
-Requirement #7: If a Territory__c record’s sales representative is changed (and only when it is changed), repeat Requirement #2’s logic for all Accounts associated with the Territory.
+Requirement #7 If a Territory__c record’s sales representative is changed (and only when it is changed), repeat Requirement #2’s logic for all Accounts associated with the Territory.
 
-Requirement #8: At least 90% test code coverage.
+Requirement #8 At least 90% test code coverage.
